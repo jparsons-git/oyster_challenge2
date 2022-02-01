@@ -1,4 +1,5 @@
 require_relative '../lib/oystercard'
+require 'oystercard'
 
 describe Oystercard do
   subject(:card) { described_class.new } # allows the use of 'card' instead of 'subject' for clarity
@@ -24,7 +25,8 @@ describe Oystercard do
   describe '#deduct' do
     it "reduces the balance on the card by the values given" do
       card.top_up(50)
-      card.deduct(25)
+      card.send(:deduct,25)
+      #result = @obj.send(:my_private_method, arguments)
       expect(card.balance).to eq 25 
     end    
   end
@@ -45,7 +47,13 @@ describe Oystercard do
       card.top_up(50)
       card.touch_out
       expect(card.in_journey).to eq false 
-    end    
+    end 
+    it "check the balance is reduced by the minimum fare on touch out" do
+      card.top_up(50)
+      # card.touch_out
+      # expect(card.in_journey).to eq false 
+      expect {card.touch_out}.to change{card.balance}.by(-1)
+    end 
   end
   
 end
