@@ -35,6 +35,9 @@ describe Oystercard do
       card.touch_in
       expect(card.in_journey).to eq true 
     end    
+    it "check the card has a minimun balance of £1 to allow touch_in" do
+      expect { card.touch_in }.to raise_error "Touch in failed: minimum balance required to touch in is £1"
+    end    
   end
 
   describe '#touch_out' do
