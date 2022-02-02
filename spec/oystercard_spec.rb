@@ -51,17 +51,23 @@ describe Oystercard do
   describe '#touch_out' do
     it "change the 'status' of the card to be in_journey?" do
       card.top_up(50)
-      card.touch_out
+      card.touch_out(station)
       expect(card.entry_station).to eq nil 
     end 
     it "check the balance is reduced by the minimum fare on touch out" do
       card.top_up(50)
-      expect {card.touch_out}.to change{card.balance}.by(-1)
+      expect {card.touch_out(station)}.to change{card.balance}.by(-1)
     end 
     it "replaces the entry station with nil after touch out" do
       card.top_up(50)
       card.touch_in(station)
-      card.touch_out
+      card.touch_out(station)
+      expect(card.entry_station).to eq nil
+    end  
+    it "stores the exit station" do
+      card.top_up(50)
+      card.touch_in(station)
+      card.touch_out(station)
       expect(card.entry_station).to eq nil
     end  
   end
