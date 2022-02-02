@@ -33,10 +33,10 @@ describe Oystercard do
   end
 
   describe '#touch_in' do
-    it "change the 'status' of the card to be in_journey?" do
+    it "change the 'status' of in_journey NB: THIS IS NOW A REDUNDANT TEST - repeated belowo" do
       card.top_up(50)
       card.touch_in(station)
-      expect(card.in_journey).to eq true 
+      expect(card.entry_station).to eq station 
     end    
     it "check the card has a minimun balance of £1 to allow touch_in" do
       expect { card.touch_in(station) }.to raise_error "Touch in failed: minimum balance required to touch in is £1"
@@ -52,7 +52,7 @@ describe Oystercard do
     it "change the 'status' of the card to be in_journey?" do
       card.top_up(50)
       card.touch_out
-      expect(card.in_journey).to eq false 
+      expect(card.entry_station).to eq nil 
     end 
     it "check the balance is reduced by the minimum fare on touch out" do
       card.top_up(50)
