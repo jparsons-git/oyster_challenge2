@@ -33,7 +33,7 @@ describe Oystercard do
   end
 
   describe '#touch_in' do
-    it "change the 'status' of in_journey NB: THIS IS NOW A REDUNDANT TEST - repeated belowo" do
+    xit "change the 'status' of in_journey NB: THIS IS NOW A REDUNDANT TEST - so set it to pending with xit" do
       card.top_up(50)
       card.touch_in(station)
       expect(card.entry_station).to eq station 
