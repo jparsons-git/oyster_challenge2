@@ -5,6 +5,12 @@ describe Oystercard do
   subject(:card) { described_class.new } # allows the use of 'card' instead of 'subject' for clarity
   let(:station){ double :station }
 
+  describe '#initialize' do
+    it "check journey list is empty when vreating a new oystercard" do
+      expect(card.journeys.length).to be == 0
+    end
+  end
+
   describe '#balance' do
     it "a new instance of oystercard has a balance of zero" do
       # oystercard = Oystercard.new - don't need this because line sets up 'card' to be a Oystercard.new
@@ -69,7 +75,31 @@ describe Oystercard do
       card.touch_in(station)
       card.touch_out(station)
       expect(card.entry_station).to eq nil
+    end 
+    # start on the journeys{} list here  
+    it "adds the completed journey to the journeys list which is a hash" do
+      card.top_up(50)
+      card.touch_in(station)
+      card.touch_out(station)
+      expect(card.journeys.length).to be > 0
+    end 
+  end
+
+  describe '#in_journey' do
+    it "checks if in_journey is false when setting up a new card" do
+      expect(!card.in_journey?)
     end  
+    it "checks if in_journey is true after touching in" do
+      card.top_up(50)
+      card.touch_in(station)
+      expect(card.in_journey?)
+    end  
+    it "checks if in_journey is false after touching in and touching out" do
+      card.top_up(50)
+      card.touch_in(station)
+      card.touch_out(station)
+      expect(card.in_journey?)
+    end   
   end
   
 end
