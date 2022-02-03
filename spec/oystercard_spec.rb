@@ -39,11 +39,6 @@ describe Oystercard do
   end
 
   describe '#touch_in' do
-    xit "change the 'status' of in_journey NB: THIS IS NOW A REDUNDANT TEST - so set it to pending with xit" do
-      card.top_up(50)
-      card.touch_in(station)
-      expect(card.entry_station).to eq station 
-    end    
     it "check the card has a minimun balance of £1 to allow touch_in" do
       expect { card.touch_in(station) }.to raise_error "Touch in failed: minimum balance required to touch in is £1"
     end 
@@ -52,6 +47,7 @@ describe Oystercard do
       card.touch_in(station)
       expect(card.entry_station).to eq station
     end
+
   end
 
   describe '#touch_out' do
